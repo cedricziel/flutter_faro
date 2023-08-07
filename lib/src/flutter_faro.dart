@@ -26,10 +26,32 @@ mixin FlutterFaro {
     }
 
     await Faro.init(
-      (opts) {
-        opts.collectorUrl = flutterFaroSettings.collectorUrl;
+      (settings) async {
+        await settingsConfiguration(settings as FlutterFaroSettings);
       },
       appRunner: appRunner,
+      // ignore: invalid_use_of_internal_member
+      settings: flutterFaroSettings,
     );
+  }
+
+  static void pushLog(String s) {
+    Faro.pushLog(s);
+  }
+
+  static pushView(String view) {
+    Faro.pushView(view);
+  }
+
+  static pushEvent(String name, Map<String, String> attributes) {
+    Faro.pushEvent(Event(name, attributes: attributes));
+  }
+
+  static pushMeasurement(String name, num value) {
+    Faro.pushMeasurement(name, value);
+  }
+
+  static pushException(Object error, {StackTrace? stackTrace}) {
+    Faro.pushError(error, stackTrace: stackTrace);
   }
 }

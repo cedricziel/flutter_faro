@@ -21,9 +21,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  int _count = 0;
+
   @override
   void initState() {
     super.initState();
+
+    FlutterFaro.pushView("MyApp");
   }
 
   @override
@@ -34,7 +38,28 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Hello!'),
+          child: ListView(children: [
+            Row(
+              children: [
+                Expanded(child: Text('Hello!'))
+              ],
+            ),
+            Row(children: [
+              ElevatedButton(onPressed: () {
+                setState(() {
+                  _count++;
+                });
+
+                FlutterFaro.pushMeasurement("clicks", _count);
+                FlutterFaro.pushEvent("click", {
+                  "clicks": "$_count",
+                });
+
+                FlutterFaro.pushLog('Tata! $_count');
+              }, child: Text("Push Me"))
+            ],)
+          ],
+          ),
         ),
       ),
     );
