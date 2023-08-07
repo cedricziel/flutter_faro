@@ -1,0 +1,3 @@
+dependency_overrides:
+  faro_dart:
+    path: ../faro_dart
