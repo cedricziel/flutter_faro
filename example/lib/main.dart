@@ -9,7 +9,7 @@ Future<void> main() async {
       options.collectorUrl = Uri.parse("https://example.com/collector");
     },
     // Init your App.
-    appRunner: () => runApp(MyApp()),
+    appRunner: () => runApp(FaroUserInteractionWidget(child: const MyApp())),
   );
 }
 
@@ -38,27 +38,36 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: ListView(children: [
-            Row(
-              children: [
-                Expanded(child: Text('Hello!'))
-              ],
-            ),
-            Row(children: [
-              ElevatedButton(onPressed: () {
-                setState(() {
-                  _count++;
-                });
+          child: ListView(
+            children: [
+              const Row(
+                children: [Expanded(child: Text('Hello!'))],
+              ),
+              Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.abc_outlined),
+                    onPressed: () {},
+                    key: const Key('Call To Action Small'),
+                  ),
+                  ElevatedButton(
+                      key: const Key('Call To Action Big'),
+                      onPressed: () {
+                        setState(() {
+                          _count++;
+                        });
 
-                FlutterFaro.pushMeasurement("clicks", _count);
-                FlutterFaro.pushEvent("click", {
-                  "clicks": "$_count",
-                });
+                        FlutterFaro.pushMeasurement("clicks", _count);
+                        FlutterFaro.pushEvent("click", {
+                          "clicks": "$_count",
+                        });
 
-                FlutterFaro.pushLog('Tata! $_count');
-              }, child: Text("Push Me"))
-            ],)
-          ],
+                        FlutterFaro.pushLog('Tata! $_count');
+                      },
+                      child: const Text("Push Me"))
+                ],
+              )
+            ],
           ),
         ),
       ),
