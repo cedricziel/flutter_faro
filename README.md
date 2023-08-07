@@ -1,15 +1,23 @@
 # flutter_faro
 
-A new Flutter project.
+Packages `faro_dart` in a way that it can be consumed nicely in a flutter app.
 
-## Getting Started
+## Example
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+```dart
+import 'package:flutter/material.dart';
+import 'dart:async';
 
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+import 'package:flutter_faro/flutter_faro.dart';
 
+Future<void> main() async {
+  await FlutterFaro.init(
+        (options) {
+          // change this to your collector URL
+          options.collectorUrl = Uri.parse("https://example.com/collector");
+        },
+    // Init your App.
+    appRunner: () => runApp(MyApp()),
+  );
+}
+```
