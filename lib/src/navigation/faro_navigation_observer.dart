@@ -8,9 +8,9 @@ const _navEventName = 'navigation';
 typedef RouteNameExtractor = RouteSettings? Function(RouteSettings? settings);
 
 typedef AdditionalInfoExtractor = Map<String, dynamic>? Function(
-    RouteSettings? from,
-    RouteSettings? to,
-    );
+  RouteSettings? from,
+  RouteSettings? to,
+);
 
 class FaroNavigatorObserver extends RouteObserver<PageRoute<dynamic>> {
   Event? _transaction;
@@ -18,8 +18,7 @@ class FaroNavigatorObserver extends RouteObserver<PageRoute<dynamic>> {
   FaroNavigatorObserver({
     RouteNameExtractor? routeNameExtractor,
     AdditionalInfoExtractor? additionalInfoProvider,
-  })  :
-        _routeNameExtractor = routeNameExtractor,
+  })  : _routeNameExtractor = routeNameExtractor,
         _additionalInfoProvider = additionalInfoProvider;
 
   final RouteNameExtractor? _routeNameExtractor;
@@ -77,7 +76,6 @@ class FaroNavigatorObserver extends RouteObserver<PageRoute<dynamic>> {
     final dynamic fromArgs = _formatArgs(from?.arguments);
     final dynamic toArgs = _formatArgs(to?.arguments);
 
-
     Map<String, String> attributes = {
       "type": type,
       "from": fromName ?? "",
@@ -98,7 +96,7 @@ class FaroNavigatorObserver extends RouteObserver<PageRoute<dynamic>> {
         attributes['info_$key'] = value;
       });
     }
-    
+
     FlutterFaro.pushEvent(_navEventName, attributes);
   }
 
@@ -131,7 +129,8 @@ class FaroNavigatorObserver extends RouteObserver<PageRoute<dynamic>> {
     });
 
     if (arguments != null) {
-      _transaction?.attributes['route_settings_arguments'] = jsonEncode(arguments);
+      _transaction?.attributes['route_settings_arguments'] =
+          jsonEncode(arguments);
     }
   }
 

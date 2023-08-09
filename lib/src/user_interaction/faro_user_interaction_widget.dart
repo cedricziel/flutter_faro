@@ -255,10 +255,7 @@ Element? _clickTrackerElement;
 /// If you are using the [SentryScreenshotWidget] as well, make sure to add
 /// [SentryUserInteractionWidget] as a child of [SentryScreenshotWidget].
 class FaroUserInteractionWidget extends StatefulWidget {
-  FaroUserInteractionWidget({
-    Key? key,
-    required this.child
-  }) : super(key: key);
+  FaroUserInteractionWidget({Key? key, required this.child}) : super(key: key);
 
   final Widget child;
 
@@ -274,8 +271,7 @@ class FaroUserInteractionWidget extends StatefulWidget {
       _FaroUserInteractionWidgetState();
 }
 
-class _FaroUserInteractionWidgetState
-    extends State<FaroUserInteractionWidget> {
+class _FaroUserInteractionWidgetState extends State<FaroUserInteractionWidget> {
   int? _lastPointerId;
   Offset? _lastPointerDownLocation;
 
@@ -401,7 +397,7 @@ class _FaroUserInteractionWidgetState
 
       final transform = renderObject.getTransformTo(rootElement.renderObject);
       final paintBounds =
-      MatrixUtils.transformRect(transform, renderObject.paintBounds);
+          MatrixUtils.transformRect(transform, renderObject.paintBounds);
 
       if (!paintBounds.contains(position)) {
         return;

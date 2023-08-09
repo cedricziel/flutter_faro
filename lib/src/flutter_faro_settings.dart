@@ -4,5 +4,5 @@ import 'package:flutter_faro/src/resource_detector.dart';
 class FlutterFaroSettings extends FaroSettings {
   ResourceDetector? resourceDetector;
 
-  FlutterFaroSettings({Uri? collectorUrl}): super(collectorUrl: collectorUrl);
+  FlutterFaroSettings({Uri? collectorUrl}) : super(collectorUrl: collectorUrl);
 }
