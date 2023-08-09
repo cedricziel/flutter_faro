@@ -1,6 +1,7 @@
 import 'package:faro_dart/faro_dart.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_faro/flutter_faro.dart';
+import 'dart:convert';
 
 const _navEventName = 'navigation';
 
@@ -71,19 +72,25 @@ class FaroNavigatorObserver extends RouteObserver<PageRoute<dynamic>> {
     RouteSettings? from,
     RouteSettings? to,
   }) {
+    final fromName = _routeNameExtractor?.call(from)?.name ?? from?.name;
+    final toName = _routeNameExtractor?.call(to)?.name ?? to?.name;
     final dynamic fromArgs = _formatArgs(from?.arguments);
     final dynamic toArgs = _formatArgs(to?.arguments);
 
+
     Map<String, String> attributes = {
       "type": type,
-      "from": _routeNameExtractor?.call(from)?.toString() ?? from.toString(),
-      "to": _routeNameExtractor?.call(to)?.toString() ?? to.toString(),
-
-      if (from != null) 'from': from.name!,
-      if (fromArgs != null) 'from_arguments': fromArgs,
-      if (to != null) 'to': to.name!,
-      if (toArgs != null) 'to_arguments': toArgs,
+      "from": fromName ?? "",
+      "to": toName ?? "",
     };
+
+    if (fromArgs != null) {
+      attributes['from_arguments'] = jsonEncode(fromArgs);
+    }
+
+    if (toArgs != null) {
+      attributes['to_arguments'] = jsonEncode(toArgs);
+    }
 
     var dataAttributes = _additionalInfoProvider?.call(from, to);
     if (dataAttributes != null) {
@@ -119,12 +126,12 @@ class FaroNavigatorObserver extends RouteObserver<PageRoute<dynamic>> {
       name = 'root ("/")';
     }
 
-    _transaction = Event(_navEventName, attributes: {
+    _transaction = Event('transaction', attributes: {
       'name': name,
     });
 
     if (arguments != null) {
-      _transaction?.attributes['route_settings_arguments'] = arguments;
+      _transaction?.attributes['route_settings_arguments'] = jsonEncode(arguments);
     }
   }
 
