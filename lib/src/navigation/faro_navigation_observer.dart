@@ -110,6 +110,8 @@ class FaroNavigatorObserver extends RouteObserver<PageRoute<dynamic>> {
     if (name == null) {
       return;
     }
+
+    FlutterFaro.pushView(name);
   }
 
   Future<void> _startTransaction(Route<dynamic>? route) async {
